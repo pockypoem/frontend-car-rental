@@ -6,12 +6,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './layouts/Dashboard.tsx';
 import Cars from './pages/dashboard/Cars.tsx';
 import Home from './pages/dashboard/Home.tsx';
+import SearchCar from './pages/SearchCar.tsx';
 
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />
+  },
+  {
+    path: '/cari-mobil',
+    element: <SearchCar />
   },
   {
     path: '/dashboard',

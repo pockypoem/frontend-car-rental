@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom"
-
 const HeroSection = () => {
   return (
     <>
@@ -14,12 +12,6 @@ const HeroSection = () => {
                         <p className="detail-heading detail-heading-hero-style lh-lg">
                             Selamat datang di Binar Car Rental. Kami menyediakan mobil kualitas terbaik dengan harga terjangaku. Selalu siap melayani kebutuhanmu untuk sewa mobil selama 24 jam.
                         </p>
-                        <button className="btn-green btn-hero">
-                            <div className="btn">
-                                <Link to="/cari-mobil" style={{ textDecoration: 'none', color: 'white' }} className="white">Mulai Sewa Mobil</Link>
-                                {/* <a href="/cars" style={{ textDecoration:'none', color: 'white' }}>Mulai Sewa Mobil</a> */}
-                            </div>
-                        </button>
                     </div>
 
 
