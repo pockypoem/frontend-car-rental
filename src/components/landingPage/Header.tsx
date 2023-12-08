@@ -47,7 +47,7 @@ const Header = () => {
                     </li>
 
                     <li>
-                        <a href="#faq" className="navigasi-link text-dark">FAQ</a>
+                        <a href="#faq" className="navigasi-link text-dark" style={{ width: '120px', marginRight: '20px' }}>FAQ</a>
                     </li>
 
                 </ul>
