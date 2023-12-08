@@ -1011,6 +1011,18 @@ img.imagehero-style {
         margin-top: -10px;
     }
 
+    img.profile-testi {
+        margin-left: -20px !important;
+    }
+
+    p.card-detail-testi {
+        margin-left: -10px;
+    }
+
+    p.person-name {
+        margin-left: -10px;
+    }
+
     /* FAQ SECTION */
 
     .faq-details {
@@ -1168,6 +1180,3 @@ img.imagehero-style {
     background: url("https://i.ibb.co/wNxCLNp/icon-input-penumpang.png") no-repeat;
     background-size: 100% 100%;
 }
-
-
-

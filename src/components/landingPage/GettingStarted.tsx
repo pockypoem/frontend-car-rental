@@ -16,6 +16,7 @@ const GettingStarted = () => {
 
             </div>
         </section>
+        <br />
     </>
   )
 }

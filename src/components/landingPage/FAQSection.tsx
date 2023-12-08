@@ -53,6 +53,7 @@ const FAQSection: React.FC = () => {
           </div>
         </div>
       </section>
+      <br />
     </>
   );
 };

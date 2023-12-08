@@ -4,6 +4,7 @@ import HeroSection from "../components/searchCar/HeroSection"
 import SearchForm from "../components/searchCar/SearchForm"
 
 const SearchCar = () => {
+
   return (
     <>
       <Header />
