@@ -1,11 +1,12 @@
 import Table from "../../components/Table";
+import { Container } from "react-bootstrap";
 
 const Cars = () => {
   return (
-    <div>
+    <Container className="mt-3">
       <h2>Cars Page</h2>
       <Table />
-    </div>
+    </Container>
   )
 }
 

@@ -34,7 +34,7 @@ function Login() {
 
                                 <Link to="/dashboard">
                                     <Button className="mb-2 custom-google-btn" size="lg" style={{ backgroundColor: '#dd4b39' }}>
-                                        Sign in as User with google
+                                        Login as User with google
                                     </Button>
                                 </Link>
                             </Form>

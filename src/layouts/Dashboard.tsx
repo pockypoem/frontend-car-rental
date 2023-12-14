@@ -11,7 +11,7 @@ const DashboardHome = () => {
 
       <div className="d-flex vh-100">
         <SideBar />
-        <div className="flex-grow-1">
+        <div className="ms-1 flex-grow-1">
           <div className="p-3">
             <CustomNavbar username={username} avatar={avatar}/>
             <Outlet />
