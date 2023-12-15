@@ -24,10 +24,6 @@ const DisplayCars = () => {
 
     const getButtonVariant = (isActive : boolean) => (isActive ? 'primary' : 'outline-primary');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const getButtonStyle = (isActive: boolean): React.CSSProperties => ({
-        color: isActive ? 'white' : 'black',
-    });
 
 
     useEffect(() => {
@@ -92,7 +88,7 @@ const DisplayCars = () => {
             {error && <Alert variant='danger'>Error fetching data: {error}</Alert>}
             {!loading && !error && !foundCars && null}
             {!loading && !error && filteredCars() && filteredCars().length === 0 && (
-                <Alert variant='danger'>No cars match the selected filter</Alert>
+                <Alert variant='danger'>No cars match with the selected filter</Alert>
             )}
             {!loading && !error && filteredCars() && filteredCars().length > 0 && (
                 <CardWrapper cars={filteredCars()} />
