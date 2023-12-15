@@ -1,3 +1,18 @@
+# Announcement 
+Apologies to Mr.Manda, this project is still in the process of completion. The following is the list:
+
+* Slicing Landing Page and Search Car ✅
+* Consume API Search Car ✅
+* UI Form Login ✅
+* UI Layout Dashboard ✅
+
+## Coming Soon:
+
+* UI Layouts for CRUD
+* OAuth and JWT Consume
+* Consume API CRUD
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
