@@ -26,13 +26,15 @@ function Login() {
                                     <Form.Control type='password' placeholder='Password' size='lg' />
                                 </Form.Group>
 
-                                <Button variant='primary' size='lg' style={{ width: '100%' }}>
-                                    Login as Admin
-                                </Button>
+                                <Link to="/dashboard">
+                                    <Button variant='primary' size='lg' style={{ width: '100%' }}>
+                                        Login as Admin
+                                    </Button>
+                                </Link>
 
                                 <hr className="my-4" />
 
-                                <Link to="/dashboard">
+                                <Link to="/user-dashboard">
                                     <Button className="mb-2 custom-google-btn" size="lg" style={{ backgroundColor: '#dd4b39' }}>
                                         Login as User with google
                                     </Button>
