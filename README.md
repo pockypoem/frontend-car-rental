@@ -11,6 +11,7 @@ Apologies to Mr.Manda, this project is still in the process of completion. The f
 * UI Layouts for CRUD
 * OAuth and JWT Consume
 * Consume API CRUD
+* Challenge Chapter 08
 
 
 # React + TypeScript + Vite
