@@ -1,4 +1,3 @@
-// SideBar.tsx
 import { useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
