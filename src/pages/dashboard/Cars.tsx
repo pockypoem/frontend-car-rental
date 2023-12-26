@@ -1,4 +1,5 @@
 import { Alert, Button, Container } from "react-bootstrap";
+import CarForm from "../../components/dashboardAdmin/CarForm";
 import CardWrapper from "../../components/dashboardAdmin/CardWrapper";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
 const Cars = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [foundCars, setFoundCars] = useState<Array<any> | undefined>();
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<string | null>(null);
@@ -18,6 +20,14 @@ const Cars = () => {
   const [smallActive, setSmallActive] = useState(false);
   const [mediumActive, setMediumActive] = useState(false);
   const [largeActive, setLargeActive] = useState(false);
+
+  const handleOpenModal = () =>{
+    setShowModal(true);
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
 
   const getButtonVariant = (isActive : boolean) => (isActive ? 'primary' : 'outline-primary');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -82,10 +92,14 @@ const Cars = () => {
                 <Button onClick={() => handleFilter('medium')} variant={getButtonVariant(mediumActive)} style={{ marginLeft: '20px' }} className={mediumActive ? 'activeFilter' : 'not-active'}>Medium</Button>
                 <Button onClick={() => handleFilter('large')} variant={getButtonVariant(largeActive)} style={{ marginLeft: '20px' }} className={largeActive ? 'activeFilter' : 'not-active'}>Large</Button>
               </div>
-              <Button variant="success" style={{ marginLeft: '20px' }}>
+              <Button variant="success" style={{ marginLeft: '20px' }} onClick={handleOpenModal}>
                 Tambah Data
               </Button>
           </div>
+          {/* Tampilkan Pop Up Car Form */}
+          <CarForm showModal={showModal} handleCloseModal={handleCloseModal}/>
+
+
           {loading && <p>Loading Data.....</p>}
           {error && <Alert variant='danger'>Error fetching data: {error}</Alert>}
           {!loading && !error && !foundCars && null}
