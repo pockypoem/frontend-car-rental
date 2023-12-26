@@ -5,10 +5,10 @@ Apologies to Mr.Manda, this project is still in the process of completion. The f
 * Consume API Search Car ✅
 * UI Form Login ✅
 * UI Layout Dashboard ✅
+* UI Layouts for CRUD ✅
 
 ## Coming Soon:
 
-* UI Layouts for CRUD
 * OAuth and JWT Consume
 * Consume API CRUD
 * Challenge Chapter 08
