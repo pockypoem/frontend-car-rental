@@ -1,10 +1,47 @@
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import stylesheet
-import { Link } from 'react-router-dom';
-
+// import { Link } from 'react-router-dom';
 import '../styles/loginPage.css';
+import { httpFetch } from '../utils/http';
+import { EventTargetForm } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+
 
 function Login() {
+
+    const navigate = useNavigate();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ _token, setToken] = useLocalStorage('auth', {})
+
+    async function submitLogin(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        
+
+        try {
+            const target = e.target as unknown as EventTargetForm;
+            
+            console.log(target.elements);
+
+            const json = await httpFetch<{ token: string }>('auth/login', {}, {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: target.elements.email.value,
+                    password: target.elements.password.value
+                })
+            })
+            
+            setToken(json);
+            navigate("/dashboard");
+
+
+        } catch(error) {
+            throw error as Error;
+        }
+    }
+
+
     return (
         <Container fluid>
             <Row className='d-flex justify-content-center align-items-center h-100'>
@@ -15,30 +52,30 @@ function Login() {
                             <h2 className="fw-bold mb-2 text-center">Sign in</h2>
                             <p className="text-white-50 mb-3">Please enter your login and password!</p>
 
-                            <Form>
-                                <Form.Group className='mb-4' controlId='formControlLgemail'>
+                            <Form onSubmit={submitLogin}>
+                                <Form.Group className='mb-4' controlId='email'>
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control type='email' placeholder='Enter email' size='lg' />
                                 </Form.Group>
 
-                                <Form.Group className='mb-4' controlId='formControlLgpass'>
+                                <Form.Group className='mb-4' controlId='password'>
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type='password' placeholder='Password' size='lg' />
                                 </Form.Group>
 
-                                <Link to="/dashboard">
-                                    <Button variant='primary' size='lg' style={{ width: '100%' }}>
-                                        Login as Admin
-                                    </Button>
-                                </Link>
+                                
+                                <Button type='submit' variant='primary' size='lg' style={{ width: '100%' }}>
+                                    Login as Admin
+                                </Button>
+                                
 
-                                <hr className="my-4" />
+                                {/* <hr className="my-4" />
 
                                 <Link to="/user-dashboard">
                                     <Button className="mb-2 custom-google-btn" size="lg" style={{ backgroundColor: '#dd4b39' }}>
                                         Login as User with google
                                     </Button>
-                                </Link>
+                                </Link> */}
                             </Form>
                         </Card.Body>
                     </Card>

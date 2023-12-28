@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Alert } from "react-bootstrap";
 import CardWrapper from "./CardWrapper";
 import { httpFetch } from "../../utils/http";
+import { EventTargetForm } from "../../types";
 
 
 // const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
@@ -12,12 +13,6 @@ import { httpFetch } from "../../utils/http";
 //     pickupTime: string,
 //     passengers: number
 // }
-
-
-
-type EventTargetForm = {
-    elements: Record<string, { value: string | number }>
-}
 
 const SearchForm = () => {
 
