@@ -1,16 +1,19 @@
 import { useState } from "react"
 import { Alert } from "react-bootstrap";
 import CardWrapper from "./CardWrapper";
+import { httpFetch } from "../../utils/http";
 
 
-const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
+// const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
 
-type FormMobil = {
-    driverType : 'withDriver' | 'withoutDriver',
-    date?: string | undefined,
-    pickupTime: string,
-    passengers: number
-}
+// type FormMobil = {
+//     driverType : 'withDriver' | 'withoutDriver',
+//     date?: string | undefined,
+//     pickupTime: string,
+//     passengers: number
+// }
+
+
 
 type EventTargetForm = {
     elements: Record<string, { value: string | number }>
@@ -24,27 +27,18 @@ const SearchForm = () => {
     async function submitCariMobil(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const target = e.target as unknown as EventTargetForm;
-        const formData: FormMobil = {
-            driverType : target.elements.driverType.value as FormMobil['driverType'],
-            passengers : +target.elements.passengers.value as FormMobil['passengers'],
-            date : String(target.elements.date.value),
-            pickupTime : String(target.elements.pickupTime.value)
-        }
-        
-        const url = new URL(`${BACKEND_URL}/api/v1/cars/`)
-        url.searchParams.append('inputTanggal', formData.date ?? '')
-        url.searchParams.append('waktuJemput', formData.pickupTime ?? '')
-        url.searchParams.append('jumlahPenumpang', String(formData.passengers))
-        
-        console.log(url.toString())
-        const res = await fetch(url.toString())
-        const json = await res.json()
-        
-        if (res.ok) {
-            console.log(json)
-            setFoundCars(json)
-        } else {
-            console.log(json)
+
+        try {
+            const json = await httpFetch('cars', {
+                inputTanggal: String(target.elements.date.value),
+                waktuJemput: String(target.elements.pickupTime.value),
+                jumlahPenumpang: +target.elements.passengers.value,
+            })
+            
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            setFoundCars(json as any)
+        } catch (error) {
+            throw error as Error;
         }
 
     }
