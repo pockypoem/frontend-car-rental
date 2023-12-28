@@ -6,10 +6,11 @@ Apologies to Mr.Manda, this project is still in the process of completion. The f
 * UI Form Login ✅
 * UI Layout Dashboard ✅
 * UI Layouts for CRUD ✅
+* Login and JWT Consume ✅
 
 ## Coming Soon:
 
-* OAuth and JWT Consume
+* OAuth Implementation
 * Consume API CRUD
 * Challenge Chapter 08
 
