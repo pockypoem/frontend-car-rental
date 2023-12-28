@@ -24,7 +24,7 @@ function Login() {
             
             console.log(target.elements);
 
-            const json = await httpFetch<{ token: string }>('auth/login', {}, {
+            const json = await httpFetch<{ token: string }>('auth/login',false, {}, {
                 method: 'POST',
                 body: JSON.stringify({
                     email: target.elements.email.value,

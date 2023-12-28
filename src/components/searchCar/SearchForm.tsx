@@ -24,7 +24,7 @@ const SearchForm = () => {
         const target = e.target as unknown as EventTargetForm;
 
         try {
-            const json = await httpFetch('cars', {
+            const json = await httpFetch('cars', false,{
                 inputTanggal: String(target.elements.date.value),
                 waktuJemput: String(target.elements.pickupTime.value),
                 jumlahPenumpang: +target.elements.passengers.value,
