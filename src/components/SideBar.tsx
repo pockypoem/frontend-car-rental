@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, Button } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import "../styles/sideBar.css";
 
@@ -18,6 +18,11 @@ const SideBar = () => {
         setCarsActive(true);
     };
 
+    const handleLogoutClick = () => {
+        // logic untuk logout: hapus token JWT dkk
+        console.log("Logout click cuy")
+    }
+
     return (
         <div className="sidebar">
             <Nav defaultActiveKey="/" className="flex-column">
@@ -28,6 +33,9 @@ const SideBar = () => {
                     Cars
                 </Nav.Link>
             </Nav>
+            <Button variant="danger" className="mt-auto" onClick={handleLogoutClick}>
+                Logout
+            </Button>
         </div>
     );
 }
