@@ -3,6 +3,7 @@ import CarForm from "../../components/dashboardAdmin/CarForm";
 import CardWrapper from "../../components/dashboardAdmin/CardWrapper";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { httpFetch } from "../../utils/http";
 
 
 const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
@@ -34,25 +35,36 @@ const Cars = () => {
 
 
   useEffect(() => {
-      const fetchData = async() => {
-          const api = `${BACKEND_URL}/api/v1/cars/`;
 
-          try {
-              const response = await axios.get(api);
-              const data = response.data;
-              setFoundCars(data);
-          } catch (err) {
-              if (err && typeof err === 'object' && 'message' in err) {
-                  setError((err as { message: string }).message);
-              } else {
-                  setError('Unknown error 🩻.');
-              }
-          } finally {
-              setLoading(false);
-          }
-      }
+    // Dummy Deleted soon
+    const id = 'cf98fcb0-5fe7-44f9-bf52-07addf811c7b'
+    async function fetchInitialData() {
+        const json = await httpFetch(`cars/${id}`, true);
+        console.log(json);
+    }
 
-      fetchData();
+    fetchInitialData();
+
+
+    const fetchData = async() => {
+        const api = `${BACKEND_URL}/api/v1/cars/`;
+
+        try {
+            const response = await axios.get(api);
+            const data = response.data;
+            setFoundCars(data);
+        } catch (err) {
+            if (err && typeof err === 'object' && 'message' in err) {
+                setError((err as { message: string }).message);
+            } else {
+                setError('Unknown error 🩻.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    fetchData();
   }, []);
 
   const handleFilter = (selectedFilter: string | null) => {
