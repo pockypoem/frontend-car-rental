@@ -9,6 +9,7 @@ import Home from './pages/dashboard/Home.tsx';
 import SearchCar from './pages/SearchCar.tsx';
 import Login from './pages/Login.tsx';
 import UserDashboard from './layouts/UserDashboard.tsx';
+import Register from './pages/Register.tsx';
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/cari-mobil',
     element: <SearchCar />
+  },
+  {
+    path: '/register',
+    element: <Register />
   },
   {
     path: '/login',

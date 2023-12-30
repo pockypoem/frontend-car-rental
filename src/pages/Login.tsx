@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import stylesheet
 import '../styles/loginPage.css';
 import { httpFetch } from '../utils/http';
 import { EventTargetForm } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 
@@ -22,7 +22,7 @@ function Login() {
         try {
             const target = e.target as unknown as EventTargetForm;
             
-            console.log(target.elements);
+            // console.log(target.elements);
 
             const json = await httpFetch<{ token: string }>('auth/login',false, {}, {
                 method: 'POST',
@@ -63,8 +63,12 @@ function Login() {
                                     <Form.Control type='password' placeholder='Password' size='lg' />
                                 </Form.Group>
 
+                                <Link to= "/register" style={{ textDecoration: 'none' }}>
+                                    Register as an Admin
+                                </Link>
+
                                 
-                                <Button type='submit' variant='primary' size='lg' style={{ width: '100%' }}>
+                                <Button type='submit' variant='primary' size='lg' style={{ width: '100%' }} className='mt-3'>
                                     Login as Admin
                                 </Button>
                                 
