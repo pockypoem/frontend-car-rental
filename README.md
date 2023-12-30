@@ -6,7 +6,7 @@ Apologies to Mr.Manda, this project is still in the process of completion. The f
 * UI Form Login ✅
 * UI Layout Dashboard ✅
 * UI Layouts for CRUD ✅
-* Login and JWT Consume ✅
+* Register - Login and JWT Consume ✅
 
 ## Coming Soon:
 
