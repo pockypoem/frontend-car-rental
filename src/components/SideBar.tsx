@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Nav, Button } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import "../styles/sideBar.css";
 
 const SideBar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [isHomeActive, setHomeActive] = useState(location.pathname === '/dashboard');
     const [isCarsActive, setCarsActive] = useState(location.pathname === '/dashboard/cars');
 
@@ -19,8 +20,13 @@ const SideBar = () => {
     };
 
     const handleLogoutClick = () => {
-        // logic untuk logout: hapus token JWT dkk
         console.log("Logout click cuy")
+        // logic untuk logout: hapus token JWT dkk
+        localStorage.removeItem('auth');
+
+        navigate('/login')
+
+        
     }
 
     useEffect(() => {
