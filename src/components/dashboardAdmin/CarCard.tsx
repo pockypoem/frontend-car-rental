@@ -1,4 +1,6 @@
 import React from 'react';
+import { httpFetch } from '../../utils/http';
+import { useNavigate } from 'react-router-dom';
 
 interface Car {
     id: string;
@@ -17,12 +19,16 @@ interface CarCardProps {
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
 
+    const navigate = useNavigate();
+
     const handleEdit = () => {
         console.log(`Edit data mobil dengan ID: ${car.id}`);
     };
 
-    const handleDelete = () => {
-        console.log(`Hapus data mobil dengan ID: ${car.id}`);
+    const handleDelete = async () => {
+        await httpFetch<void>(`cars/${car.id}`, true, {}, { method: 'DELETE' });
+        console.log(`Berhasil menghapus data dengan ID: ${car.id}`);
+        navigate('/dashboard', {replace: true});
     };
 
 

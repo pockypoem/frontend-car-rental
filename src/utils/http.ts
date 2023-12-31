@@ -29,6 +29,11 @@ export async function httpFetch<TResponse>(
         ...options, 
     });
 
+    if (res.status === 204) {
+        // Respons tanpa konten (No Content), tidak perlu mengurai JSON
+        return {} as TResponse;
+    }
+
     if(res.ok) {
         return await res.json();
     } else {

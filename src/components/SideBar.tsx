@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import "../styles/sideBar.css";
@@ -22,6 +22,11 @@ const SideBar = () => {
         // logic untuk logout: hapus token JWT dkk
         console.log("Logout click cuy")
     }
+
+    useEffect(() => {
+        setHomeActive(location.pathname === '/dashboard');
+        setCarsActive(location.pathname === '/dashboard/cars');
+    }, [location.pathname])
 
     return (
         <div className="sidebar">
