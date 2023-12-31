@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { httpFetch } from '../../utils/http';
 import { useNavigate } from 'react-router-dom';
+import CarForm from './CarForm';
 
 interface Car {
     id: string;
@@ -20,9 +21,25 @@ interface CarCardProps {
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
 
     const navigate = useNavigate();
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editData, setEditData] = useState<Car | null>(null);
 
-    const handleEdit = () => {
-        console.log(`Edit data mobil dengan ID: ${car.id}`);
+    const handleEdit = async () => {
+        // console.log(`Edit data mobil dengan ID: ${car.id}`);
+
+        try {
+            const response = await httpFetch<Car>(`cars/${car.id}`, true, {}, { method: 'GET' });
+            const carData = response;
+            
+            setEditData(carData);
+
+            setShowEditModal(true);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error : any) {
+            console.error(`Failed to fetch car data for editing: ${error.message}`);
+        }
+
     };
 
     const handleDelete = async () => {
@@ -85,6 +102,13 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
                     </div>
                 </div>
             </div>
+            {showEditModal && (
+                <CarForm 
+                    showModal={showEditModal}
+                    handleCloseModal={() => setShowEditModal(false)}
+                    editData={editData}
+                />
+            )}
         </div>
     );
 };

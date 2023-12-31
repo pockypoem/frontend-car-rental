@@ -3,7 +3,7 @@ import CarForm from "../../components/dashboardAdmin/CarForm";
 import CardWrapper from "../../components/dashboardAdmin/CardWrapper";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { httpFetch } from "../../utils/http";
+// import { httpFetch } from "../../utils/http";
 
 
 const BACKEND_URL = import.meta.env['VITE_BACKEND_URL'];
@@ -35,16 +35,6 @@ const Cars = () => {
 
 
   useEffect(() => {
-
-    // Dummy Deleted soon
-    const id = '0477bbaa-aa7a-41a1-aee4-c8a4771f1a65'
-    async function fetchInitialData() {
-        const json = await httpFetch(`cars/${id}`, true);
-        console.log(json);
-    }
-
-    fetchInitialData();
-
 
     const fetchData = async() => {
         const api = `${BACKEND_URL}/api/v1/cars/`;

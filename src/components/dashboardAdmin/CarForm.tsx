@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { httpFetch } from '../../utils/http';
+import { useNavigate } from 'react-router-dom';
+
+type Car = {
+    specs?: string[];
+    options?: string[];
+    model?: string;
+    available?: boolean;
+    availableAt?: string;
+    plate?: string;
+    manufacture?: string;
+    id?: string;
+    image?: string;
+    type?: string;
+    description?: string;
+    capacity?: number;
+    transmission?: string;
+    year?: number;
+    rentPerDay?: number;
+}
 
 interface CarFormProps {
     showModal: boolean;
     handleCloseModal: () => void;
+    editData?: Car | null | undefined;
 }
 
 
-const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
+const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal, editData }) => {
 
     const [formData, setFormData] = React.useState({
         plate: '',
@@ -28,6 +48,31 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
     })
 
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if(editData) {
+            const editedFormData = {
+                plate: editData.plate || '',
+                manufacture: editData.manufacture || '',
+                model: editData.model || '',
+                image: editData.image || '',
+                rentPerDay: editData.rentPerDay || 0,
+                capacity: editData.capacity || 0,
+                description: editData.description || '',
+                availableAt: editData.availableAt ? new Date(editData.availableAt).toISOString().slice(0, 16) : '', // Mengonversi format tanggal,
+                transmission: editData.transmission || '',
+                available: editData.available || true,
+                type: editData.type || '',
+                year: editData.year || 0,
+                options: editData.options || [''],
+                specs: editData.specs || [''],
+            };
+
+            setFormData(editedFormData);
+        }
+    }, [editData])
 
     // menangani perubahan pada input
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,11 +81,46 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
         // Jika jenis input adalah checkbox, gunakan checked sebagai nilainya
         const inputValue = type === 'checkbox' ? checked : value;
     
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: inputValue,
-        }));
+        if (name === 'availableAt') {
+            // Pastikan nilai input adalah string sebelum mencoba membuat objek Date
+            if (typeof inputValue === 'string') {
+                try {
+                    // Cobalah untuk membuat objek tanggal dari nilai input
+                    const dateObject = new Date(inputValue);
+    
+                    // Periksa apakah tanggal yang valid
+                    if (isNaN(dateObject.getTime())) {
+                        throw new Error('Format tanggal tidak valid.');
+                    }
+    
+                    // Ubah ke format ISO yang diharapkan
+                    const isoString = dateObject.toISOString().slice(0, 16); // Ambil format "YYYY-MM-DDThh:mm"
+    
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        [name]: isoString,
+                    }));
+    
+                    // Bersihkan pesan kesalahan jika ada
+                    setError(null);
+                } catch (error) {
+                    // Tangani kesalahan jika pembuatan objek tanggal gagal
+                    setError('Format tanggal tidak valid.');
+                }
+            } else {
+                // Tangani kasus ketika nilai input bukan string
+                setError('Input tanggal harus berupa string.');
+            }
+        } else {
+            // Jika bukan kolom 'availableAt', gunakan nilai langsung
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: inputValue,
+            }));
+        }
     };
+    
+    
 
     // menangani perubahan pada input array (options dan specs)
     const handleArrayInputChange = (index: number, value: string, arrayType: 'options' | 'specs') => {
@@ -88,11 +168,21 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
 
         try {
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const response = await httpFetch<any>('cars', true, formData, {
-                method: 'POST',
-                body: JSON.stringify(formData)
-            });
+            let response;
+
+            if(editData) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                response = await httpFetch<any>(`cars/${editData.id}`, true, formData, {
+                    method: 'PUT',
+                    body: JSON.stringify(formData)
+                })
+            } else {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                response = await httpFetch<any>('cars', true, formData, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+            }
 
             console.log('Berhasil simpan data cuy: ', response);
 
@@ -116,6 +206,8 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
 
             // Close Modal after saving
             handleCloseModal();
+
+            navigate('/dashboard', {replace: true});
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch(error: any) {
