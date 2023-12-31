@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { httpFetch } from '../../utils/http';
 
 interface CarFormProps {
     showModal: boolean;
@@ -25,6 +26,8 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
         options: [''],
         specs: ['']
     })
+
+    const [error, setError] = useState<string | null>(null);
 
     // menangani perubahan pada input
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,12 +76,55 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
 
 
     // menangani submit Form
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Logic for save data to backend
         console.log("Ceritanya Simpan Data: ", formData);
 
-        handleCloseModal();
+        if (!formData.plate || !formData.manufacture || !formData.model || !formData.image || !formData.availableAt || !formData.transmission || !formData.type) {
+            setError('Mohon isi semua kolom yang diperlukan.');
+            return;
+        }
+
+        try {
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response = await httpFetch<any>('cars', true, formData, {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+
+            console.log('Berhasil simpan data cuy: ', response);
+
+            // Reset Form
+            setFormData({
+                plate: '',
+                manufacture: '',
+                model: '',
+                image: '',
+                rentPerDay: 0,
+                capacity: 0,
+                description: '',
+                availableAt: '',
+                transmission: '',
+                available: true,
+                type: '',
+                year: 0,
+                options: [''],
+                specs: [''],
+            });
+
+            // Close Modal after saving
+            handleCloseModal();
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch(error: any) {
+            console.error('Gagal menyimpan data: ', error);
+
+            setError('Terjadi kesalahan saat menyimpan data');
+        }
+
+        
     }
 
 
@@ -272,7 +318,8 @@ const CarForm: React.FC<CarFormProps> = ({ showModal, handleCloseModal }) => {
                         </Button>
                     </Form.Group>
 
-
+                    {/* Tampilkan pesan kesalahan jika ada */}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     
                     <br />
                     <Button className="mt-3" variant='dark' type='submit' style={{ width: '100%' }}>

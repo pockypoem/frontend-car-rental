@@ -37,7 +37,7 @@ const Cars = () => {
   useEffect(() => {
 
     // Dummy Deleted soon
-    const id = '0e05834e-db23-4690-8ce0-a4a30cd7be31'
+    const id = '0477bbaa-aa7a-41a1-aee4-c8a4771f1a65'
     async function fetchInitialData() {
         const json = await httpFetch(`cars/${id}`, true);
         console.log(json);
