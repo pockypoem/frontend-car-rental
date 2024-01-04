@@ -8,9 +8,9 @@ Apologies to Mr.Manda, this project is still in the process of completion. The f
 * UI Layouts for CRUD ✅
 * Register - Login and JWT Consume ✅
 * Consume API CRUD ✅
+* OAuth Implementation ✅
 
 ## Coming Soon:
-* OAuth Implementation
 * Challenge Chapter 08
 
 

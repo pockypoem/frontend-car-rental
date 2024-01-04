@@ -6,7 +6,8 @@ import { httpFetch } from '../utils/http';
 import { EventTargetForm } from '../types';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
+import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthToken } from '../types';
 
 
 function Login() {
@@ -41,6 +42,36 @@ function Login() {
         }
     }
 
+    const loginWithGoogle = useGoogleLogin({
+        onSuccess: async ({ code }) => {
+            console.log(code);
+            const tokens : GoogleOAuthToken = await httpFetch('auth/google', false, {}, { 
+                method: 'post',
+                body: JSON.stringify({ code })
+            })
+
+            try {
+                const userInfoResponse = await fetch('https://openidconnect.googleapis.com/v1/userinfo',{
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `${tokens.token_type} ${tokens.access_token}`
+                    }
+                })
+
+                const userInfoJSON = await userInfoResponse.json();
+                console.log(userInfoJSON);
+
+                localStorage.setItem('googleUserData', JSON.stringify(userInfoJSON));
+
+                navigate("/user-dashboard");
+            } catch(error) {
+                console.error("Error fetching user cuy: ", error);
+            }
+        },
+        flow: 'auth-code'
+    }) 
+
 
     return (
         <Container fluid>
@@ -72,15 +103,19 @@ function Login() {
                                     Login as Admin
                                 </Button>
                                 
-
-                                {/* <hr className="my-4" />
-
-                                <Link to="/user-dashboard">
-                                    <Button className="mb-2 custom-google-btn" size="lg" style={{ backgroundColor: '#dd4b39' }}>
-                                        Login as User with google
-                                    </Button>
-                                </Link> */}
                             </Form>
+                            <hr className="my-4" />
+
+                            
+                            <Button 
+                                onClick={loginWithGoogle}
+                                className="mb-2 custom-google-btn" 
+                                size="lg" 
+                                style={{ backgroundColor: '#dd4b39' }}
+                            >
+                                Login as User with google
+                            </Button>
+                            
                         </Card.Body>
                     </Card>
                 </Col>

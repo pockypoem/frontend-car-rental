@@ -10,6 +10,7 @@ import SearchCar from './pages/SearchCar.tsx';
 import Login from './pages/Login.tsx';
 import UserDashboard from './layouts/UserDashboard.tsx';
 import Register from './pages/Register.tsx';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 const router = createBrowserRouter([
@@ -52,6 +53,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <GoogleOAuthProvider clientId='984623380816-ehidc8070b2gn1c4hde8pdioolghvo86.apps.googleusercontent.com'>
+      <RouterProvider router={router}/>
+    </GoogleOAuthProvider>
   </React.StrictMode>,
 )
