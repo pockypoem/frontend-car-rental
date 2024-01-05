@@ -1,15 +1,3 @@
-# Announcement ⚠️
-Apologies to Mr.Manda, this project is still in the process of completion. The following is the list:
-
-* Slicing Landing Page and Search Car ✅
-* Consume API Search Car ✅
-* UI Form Login ✅
-* UI Layout Dashboard ✅
-* UI Layouts for CRUD ✅
-* Register - Login and JWT Consume ✅
-* Consume API CRUD ✅
-* OAuth Implementation ✅
-
 ## Coming Soon:
 * Challenge Chapter 08
 
